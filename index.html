@@ -12,143 +12,74 @@
 *{margin:0;padding:0;box-sizing:border-box}
 body{font-family:'Inter',sans-serif;width:100%;background:#fff}
 
-/* ═══ DESKTOP LAYOUT (≥ 500px) ═══ */
-.wrap{
-  display:flex;width:100%;aspect-ratio:1/1;
-  box-shadow:0 2px 16px rgba(0,0,0,0.12);
+/* ── OUTER WRAPPER ── */
+.outer{
+  width:100%;
+  box-shadow:0 2px 16px rgba(0,0,0,0.10);
+  background:#fff;
 }
 
-.sidebar{
-  width:200px;flex-shrink:0;background:#fff;
-  display:flex;flex-direction:column;
-  border-right:1px solid #e8e4de;overflow:hidden;
+/* ── HEADER ── */
+.hdr{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:14px 18px 12px;
+  border-bottom:1px solid #ede9e3;
+  gap:12px;
 }
-
-.card-top{
-  padding:18px 16px 14px;
-  border-bottom:1px solid #f0ede8;flex-shrink:0;
-}
+.hdr-text{}
 .eyebrow{
-  font-size:8px;font-weight:600;
-  letter-spacing:2.5px;text-transform:uppercase;
-  color:#8B2500;margin-bottom:7px;
+  font-size:8px;font-weight:600;letter-spacing:2.5px;
+  text-transform:uppercase;color:#8B2500;margin-bottom:5px;
 }
 .card-title{
   font-family:'Playfair Display',serif;
-  font-size:17px;font-weight:700;
-  color:#1a1a1a;line-height:1.2;margin-bottom:3px;
+  font-size:18px;font-weight:700;
+  color:#1a1a1a;line-height:1.15;
 }
 .card-sub{
   font-family:'Playfair Display',serif;
-  font-style:italic;font-size:11px;
-  color:#999;margin-bottom:14px;
+  font-style:italic;font-size:11px;color:#aaa;margin-top:2px;
 }
-.stats{
-  display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:8px;padding:12px 0 0;border-top:1px solid #f0ede8;
+.hdr-stats{
+  display:flex;gap:20px;flex-shrink:0;
+  padding-left:18px;
+  border-left:1px solid #ede9e3;
 }
 .stat{text-align:center}
-.stat-v{display:block;font-size:14px;font-weight:600;color:#1a1a1a;line-height:1}
-.stat-l{display:block;font-size:7.5px;letter-spacing:0.8px;
-  text-transform:uppercase;color:#bbb;margin-top:2px}
+.stat-v{display:block;font-size:16px;font-weight:600;color:#1a1a1a;line-height:1}
+.stat-l{display:block;font-size:7px;letter-spacing:1px;
+  text-transform:uppercase;color:#ccc;margin-top:3px}
 
-/* Desktop stop list */
-.stop-list{
-  flex:1;overflow-y:auto;padding:8px 0;
-  scrollbar-width:thin;scrollbar-color:#e0dbd4 transparent;
+/* ── MAP ── */
+#map{width:100%;height:420px;}
+
+/* ── STOP GRID ── */
+.stop-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr 1fr;
+  border-top:1px solid #ede9e3;
 }
-.stop-list::-webkit-scrollbar{width:3px}
-.stop-list::-webkit-scrollbar-thumb{background:#e0dbd4;border-radius:2px}
-
-.stop-item{
+.sg-item{
   display:flex;align-items:center;gap:9px;
-  padding:5px 14px;cursor:pointer;transition:background 0.12s;
+  padding:8px 12px;cursor:pointer;
+  border-right:1px solid #f2efe9;
+  border-bottom:1px solid #f2efe9;
+  transition:background 0.12s;
 }
-.stop-item:hover{background:#faf8f5}
-.stop-item.active{background:#fff4f0}
-.snum{
-  width:19px;height:19px;border-radius:50%;
+.sg-item:hover{background:#faf8f5}
+.sg-item.active{background:#fff4f0}
+.sg-item:nth-child(3n){border-right:none}
+.sg-num{
+  width:20px;height:20px;border-radius:50%;flex-shrink:0;
   background:#1B2A4A;color:white;
-  font-size:8px;font-weight:600;
+  font-size:8.5px;font-weight:600;
   display:flex;align-items:center;justify-content:center;
-  flex-shrink:0;transition:background 0.2s;
+  transition:background 0.2s;
 }
-.stop-item.active .snum{background:#8B2500}
-.sname{font-size:10px;color:#444;line-height:1.3}
+.sg-item.active .sg-num{background:#8B2500}
+.sg-name{font-size:10px;color:#444;line-height:1.3;}
 
-/* Map */
-#map{flex:1;min-width:0}
-
-/* Mobile stop grid — hidden on desktop */
-.stop-grid{display:none}
-
-/* ═══ MOBILE LAYOUT (< 500px) ═══ */
-@media (max-width:499px){
-  .wrap{
-    flex-direction:column;
-    aspect-ratio:auto;
-    box-shadow:none;
-  }
-
-  /* Sidebar becomes compact header */
-  .sidebar{
-    width:100%;flex-direction:row;
-    border-right:none;border-bottom:1px solid #e8e4de;
-    align-items:stretch;
-  }
-  .card-top{
-    flex:1;padding:12px 14px 10px;
-    border-bottom:none;border-right:1px solid #f0ede8;
-  }
-  .card-title{font-size:14px}
-  .card-sub{font-size:10px;margin-bottom:10px}
-  .eyebrow{font-size:7px;margin-bottom:5px}
-  .stats{
-    grid-template-columns:1fr 1fr 1fr;
-    gap:4px;padding:8px 0 0;
-  }
-  .stat-v{font-size:13px}
-
-  /* Hide desktop list on mobile */
-  .stop-list{display:none}
-
-  /* Map: square-ish on mobile */
-  #map{
-    width:100%;height:65vw;min-height:240px;max-height:340px;
-    flex:none;
-  }
-
-  /* Mobile stop grid — 3 columns */
-  .stop-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr 1fr;
-    gap:0;
-    border-top:1px solid #f0ede8;
-    background:#fff;
-    box-shadow:0 2px 12px rgba(0,0,0,0.08);
-  }
-  .sg-item{
-    display:flex;align-items:center;gap:6px;
-    padding:7px 8px;cursor:pointer;
-    border-right:1px solid #f4f1ee;
-    border-bottom:1px solid #f4f1ee;
-    transition:background 0.12s;
-  }
-  .sg-item:hover{background:#faf8f5}
-  .sg-item.active{background:#fff4f0}
-  .sg-item:nth-child(3n){border-right:none}
-  .sg-num{
-    width:17px;height:17px;border-radius:50%;
-    background:#1B2A4A;color:white;
-    font-size:7px;font-weight:600;
-    display:flex;align-items:center;justify-content:center;
-    flex-shrink:0;transition:background 0.2s;
-  }
-  .sg-item.active .sg-num{background:#8B2500}
-  .sg-name{font-size:9px;color:#555;line-height:1.25;}
-}
-
-/* ═══ POPUPS ═══ */
+/* ── POPUPS ── */
 .leaflet-popup-content-wrapper{
   border-radius:3px;
   box-shadow:0 6px 24px rgba(0,0,0,0.14);
@@ -162,7 +93,6 @@ body{font-family:'Inter',sans-serif;width:100%;background:#fff}
   font-weight:700;color:#1a1a1a;margin-bottom:7px;line-height:1.3}
 .pu-d{font-size:10px;color:#666;line-height:1.65}
 
-/* Leg distance popup */
 .leg-popup .leaflet-popup-content-wrapper{
   background:#1B2A4A;border-radius:3px;
   box-shadow:0 4px 14px rgba(0,0,0,0.2);
@@ -177,7 +107,7 @@ body{font-family:'Inter',sans-serif;width:100%;background:#fff}
 .lp-label{font-size:7.5px;color:rgba(255,255,255,0.4);
   letter-spacing:0.5px;text-transform:uppercase;margin-top:2px}
 
-/* Markers */
+/* ── MARKERS ── */
 .mpin{
   width:24px;height:24px;border-radius:50%;
   background:#1B2A4A;border:2.5px solid white;
@@ -197,9 +127,8 @@ body{font-family:'Inter',sans-serif;width:100%;background:#fff}
   display:block;padding:7px 11px;
   background:rgba(255,255,255,0.96);border:1px solid #ddd;
   font-family:'Inter',sans-serif;font-size:9px;
-  font-weight:500;letter-spacing:1px;
-  text-transform:uppercase;color:#888;
-  border-radius:2px;cursor:pointer;
+  font-weight:500;letter-spacing:1px;text-transform:uppercase;
+  color:#888;border-radius:2px;cursor:pointer;
   box-shadow:0 1px 5px rgba(0,0,0,0.15);
   transition:all 0.2s;white-space:nowrap;
 }
@@ -207,28 +136,41 @@ body{font-family:'Inter',sans-serif;width:100%;background:#fff}
 
 .leaflet-control-zoom a{font-size:14px !important}
 .leaflet-control-attribution{font-size:8px !important}
+
+/* ── MOBILE ── */
+@media(max-width:480px){
+  .hdr{flex-direction:column;align-items:flex-start;padding:12px 14px 10px;gap:10px}
+  .hdr-stats{border-left:none;padding-left:0;border-top:1px solid #ede9e3;padding-top:10px;width:100%;justify-content:space-between;}
+  .card-title{font-size:16px}
+  #map{height:65vw;min-height:220px}
+  .stop-grid{grid-template-columns:1fr 1fr}
+  .sg-item:nth-child(3n){border-right:1px solid #f2efe9}
+  .sg-item:nth-child(2n){border-right:none}
+  .sg-name{font-size:9.5px}
+}
 </style>
 </head>
 <body>
+<div class="outer">
 
-<div class="wrap">
-  <div class="sidebar">
-    <div class="card-top">
+  <div class="hdr">
+    <div class="hdr-text">
       <div class="eyebrow">SANParks · Optimal Route</div>
-      <div class="card-title">The Ultimate<br>Road Trip</div>
+      <div class="card-title">The Ultimate Road Trip</div>
       <div class="card-sub">All 21 National Parks</div>
-      <div class="stats">
-        <div class="stat"><span class="stat-v">8,109</span><span class="stat-l">km</span></div>
-        <div class="stat"><span class="stat-v">21</span><span class="stat-l">parks</span></div>
-        <div class="stat"><span class="stat-v">132h</span><span class="stat-l">drive</span></div>
-      </div>
     </div>
-    <div class="stop-list" id="stopList"></div>
+    <div class="hdr-stats">
+      <div class="stat"><span class="stat-v">8,109</span><span class="stat-l">km</span></div>
+      <div class="stat"><span class="stat-v">21</span><span class="stat-l">parks</span></div>
+      <div class="stat"><span class="stat-v">132h</span><span class="stat-l">drive</span></div>
+    </div>
   </div>
-  <div id="map"></div>
-</div>
 
-<div class="stop-grid" id="stopGrid"></div>
+  <div id="map"></div>
+
+  <div class="stop-grid" id="stopGrid"></div>
+
+</div>
 
 <script>
 const routeLegs=[
@@ -303,7 +245,7 @@ routeLegs.forEach(function(c,i){
     });
 });
 
-var active=null, markers={};
+var active=null,markers={};
 
 parks.forEach(function(p){
   var icon=L.divIcon({
@@ -323,20 +265,8 @@ parks.forEach(function(p){
   markers[p.n]=m;
 });
 
-// Desktop stop list
-var listEl=document.getElementById('stopList');
-// Mobile stop grid
 var gridEl=document.getElementById('stopGrid');
-
 parks.forEach(function(p){
-  // Desktop list item
-  var item=document.createElement('div');
-  item.className='stop-item';item.id='item'+p.n;
-  item.innerHTML='<div class="snum">'+p.n+'</div><div class="sname">'+p.name+'</div>';
-  item.onclick=function(){flyTo(p.lat,p.lon,p.n);};
-  listEl.appendChild(item);
-
-  // Mobile grid item
   var gi=document.createElement('div');
   gi.className='sg-item';gi.id='gi'+p.n;
   gi.innerHTML='<div class="sg-num">'+p.n+'</div><div class="sg-name">'+p.name+'</div>';
@@ -346,28 +276,20 @@ parks.forEach(function(p){
 
 function flyTo(lat,lon,n){
   if(active!==null){
-    ['pin','item','gi'].forEach(function(pfx){
-      var el=document.getElementById(pfx+active);
-      if(el) el.classList.remove('active');
-    });
+    var op=document.getElementById('pin'+active);if(op)op.classList.remove('active');
+    var og=document.getElementById('gi'+active);if(og)og.classList.remove('active');
   }
   active=n;
-  ['pin','item','gi'].forEach(function(pfx){
-    var el=document.getElementById(pfx+n);
-    if(el) el.classList.add('active');
-  });
-  var li=document.getElementById('item'+n);
-  if(li) li.scrollIntoView({block:'nearest',behavior:'smooth'});
+  var np=document.getElementById('pin'+n);if(np)np.classList.add('active');
+  var ng=document.getElementById('gi'+n);if(ng)ng.classList.add('active');
   map.flyTo([lat,lon],9,{duration:0.85});
   setTimeout(function(){markers[n].openPopup();},900);
 }
 
 function resetView(){
   if(active!==null){
-    ['pin','item','gi'].forEach(function(pfx){
-      var el=document.getElementById(pfx+active);
-      if(el) el.classList.remove('active');
-    });
+    var op=document.getElementById('pin'+active);if(op)op.classList.remove('active');
+    var og=document.getElementById('gi'+active);if(og)og.classList.remove('active');
     active=null;
   }
   map.closePopup();
