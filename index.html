@@ -10,62 +10,49 @@
 <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',sans-serif;width:100%;background:#f0ede8}
+body{font-family:'Inter',sans-serif;width:100%;background:#fff}
 
+/* ═══ DESKTOP LAYOUT (≥ 500px) ═══ */
 .wrap{
-  display:flex;
-  width:100%;
-  aspect-ratio:1/1;
+  display:flex;width:100%;aspect-ratio:1/1;
   box-shadow:0 2px 16px rgba(0,0,0,0.12);
 }
 
-/* ── SIDEBAR ── */
 .sidebar{
-  width:200px;
-  flex-shrink:0;
-  background:#fff;
-  display:flex;
-  flex-direction:column;
-  border-right:1px solid #e8e4de;
-  overflow:hidden;
+  width:200px;flex-shrink:0;background:#fff;
+  display:flex;flex-direction:column;
+  border-right:1px solid #e8e4de;overflow:hidden;
 }
 
 .card-top{
   padding:18px 16px 14px;
-  border-bottom:1px solid #f0ede8;
-  flex-shrink:0;
+  border-bottom:1px solid #f0ede8;flex-shrink:0;
 }
-
 .eyebrow{
   font-size:8px;font-weight:600;
   letter-spacing:2.5px;text-transform:uppercase;
   color:#8B2500;margin-bottom:7px;
 }
-
 .card-title{
   font-family:'Playfair Display',serif;
   font-size:17px;font-weight:700;
-  color:#1a1a1a;line-height:1.2;
-  margin-bottom:3px;
+  color:#1a1a1a;line-height:1.2;margin-bottom:3px;
 }
-
 .card-sub{
   font-family:'Playfair Display',serif;
   font-style:italic;font-size:11px;
   color:#999;margin-bottom:14px;
 }
-
 .stats{
   display:grid;grid-template-columns:1fr 1fr 1fr;
-  gap:8px;padding:12px 0 0;
-  border-top:1px solid #f0ede8;
+  gap:8px;padding:12px 0 0;border-top:1px solid #f0ede8;
 }
-
 .stat{text-align:center}
 .stat-v{display:block;font-size:14px;font-weight:600;color:#1a1a1a;line-height:1}
-.stat-l{display:block;font-size:7.5px;letter-spacing:0.8px;text-transform:uppercase;color:#bbb;margin-top:2px}
+.stat-l{display:block;font-size:7.5px;letter-spacing:0.8px;
+  text-transform:uppercase;color:#bbb;margin-top:2px}
 
-/* Stop list */
+/* Desktop stop list */
 .stop-list{
   flex:1;overflow-y:auto;padding:8px 0;
   scrollbar-width:thin;scrollbar-color:#e0dbd4 transparent;
@@ -75,12 +62,10 @@ body{font-family:'Inter',sans-serif;width:100%;background:#f0ede8}
 
 .stop-item{
   display:flex;align-items:center;gap:9px;
-  padding:5px 14px;cursor:pointer;
-  border-radius:0;transition:background 0.12s;
+  padding:5px 14px;cursor:pointer;transition:background 0.12s;
 }
 .stop-item:hover{background:#faf8f5}
 .stop-item.active{background:#fff4f0}
-
 .snum{
   width:19px;height:19px;border-radius:50%;
   background:#1B2A4A;color:white;
@@ -89,26 +74,108 @@ body{font-family:'Inter',sans-serif;width:100%;background:#f0ede8}
   flex-shrink:0;transition:background 0.2s;
 }
 .stop-item.active .snum{background:#8B2500}
+.sname{font-size:10px;color:#444;line-height:1.3}
 
-.sname{font-size:10px;color:#444;line-height:1.3;}
-
-/* Reset */
-.reset-row{
-  padding:10px 14px;border-top:1px solid #f0ede8;flex-shrink:0;
-}
-.reset-btn{
-  width:100%;padding:7px 0;
-  background:none;border:1px solid #ddd;
-  font-family:'Inter',sans-serif;font-size:9px;
-  font-weight:500;letter-spacing:1px;
-  text-transform:uppercase;color:#888;
-  border-radius:2px;cursor:pointer;
-  transition:all 0.2s;
-}
-.reset-btn:hover{background:#1B2A4A;color:white;border-color:#1B2A4A}
-
-/* ── MAP ── */
+/* Map */
 #map{flex:1;min-width:0}
+
+/* Mobile stop grid — hidden on desktop */
+.stop-grid{display:none}
+
+/* ═══ MOBILE LAYOUT (< 500px) ═══ */
+@media (max-width:499px){
+  .wrap{
+    flex-direction:column;
+    aspect-ratio:auto;
+    box-shadow:none;
+  }
+
+  /* Sidebar becomes compact header */
+  .sidebar{
+    width:100%;flex-direction:row;
+    border-right:none;border-bottom:1px solid #e8e4de;
+    align-items:stretch;
+  }
+  .card-top{
+    flex:1;padding:12px 14px 10px;
+    border-bottom:none;border-right:1px solid #f0ede8;
+  }
+  .card-title{font-size:14px}
+  .card-sub{font-size:10px;margin-bottom:10px}
+  .eyebrow{font-size:7px;margin-bottom:5px}
+  .stats{
+    grid-template-columns:1fr 1fr 1fr;
+    gap:4px;padding:8px 0 0;
+  }
+  .stat-v{font-size:13px}
+
+  /* Hide desktop list on mobile */
+  .stop-list{display:none}
+
+  /* Map: square-ish on mobile */
+  #map{
+    width:100%;height:65vw;min-height:240px;max-height:340px;
+    flex:none;
+  }
+
+  /* Mobile stop grid — 3 columns */
+  .stop-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr 1fr;
+    gap:0;
+    border-top:1px solid #f0ede8;
+    background:#fff;
+    box-shadow:0 2px 12px rgba(0,0,0,0.08);
+  }
+  .sg-item{
+    display:flex;align-items:center;gap:6px;
+    padding:7px 8px;cursor:pointer;
+    border-right:1px solid #f4f1ee;
+    border-bottom:1px solid #f4f1ee;
+    transition:background 0.12s;
+  }
+  .sg-item:hover{background:#faf8f5}
+  .sg-item.active{background:#fff4f0}
+  .sg-item:nth-child(3n){border-right:none}
+  .sg-num{
+    width:17px;height:17px;border-radius:50%;
+    background:#1B2A4A;color:white;
+    font-size:7px;font-weight:600;
+    display:flex;align-items:center;justify-content:center;
+    flex-shrink:0;transition:background 0.2s;
+  }
+  .sg-item.active .sg-num{background:#8B2500}
+  .sg-name{font-size:9px;color:#555;line-height:1.25;}
+}
+
+/* ═══ POPUPS ═══ */
+.leaflet-popup-content-wrapper{
+  border-radius:3px;
+  box-shadow:0 6px 24px rgba(0,0,0,0.14);
+  max-width:220px;
+}
+.leaflet-popup-content{margin:0;padding:0}
+.pu{padding:13px 15px 11px}
+.pu-n{font-size:8px;font-weight:600;letter-spacing:2px;
+  text-transform:uppercase;color:#8B2500;margin-bottom:4px}
+.pu-t{font-family:'Playfair Display',serif;font-size:13px;
+  font-weight:700;color:#1a1a1a;margin-bottom:7px;line-height:1.3}
+.pu-d{font-size:10px;color:#666;line-height:1.65}
+
+/* Leg distance popup */
+.leg-popup .leaflet-popup-content-wrapper{
+  background:#1B2A4A;border-radius:3px;
+  box-shadow:0 4px 14px rgba(0,0,0,0.2);
+}
+.leg-popup .leaflet-popup-tip{background:#1B2A4A}
+.leg-popup .leaflet-popup-close-button{color:rgba(255,255,255,0.5) !important}
+.lp{padding:9px 13px 8px;text-align:center}
+.lp-route{font-size:8px;font-weight:500;letter-spacing:1px;
+  text-transform:uppercase;color:rgba(255,255,255,0.5);margin-bottom:4px}
+.lp-dist{font-family:'Playfair Display',serif;font-size:18px;
+  font-weight:700;color:white;line-height:1}
+.lp-label{font-size:7.5px;color:rgba(255,255,255,0.4);
+  letter-spacing:0.5px;text-transform:uppercase;margin-top:2px}
 
 /* Markers */
 .mpin{
@@ -125,28 +192,26 @@ body{font-family:'Inter',sans-serif;width:100%;background:#f0ede8}
   box-shadow:0 3px 10px rgba(139,37,0,0.4);
 }
 
-/* Popup */
-.leaflet-popup-content-wrapper{
-  border-radius:3px;
-  box-shadow:0 6px 24px rgba(0,0,0,0.14);
-  max-width:220px;
+/* Route overview control */
+.reset-map-btn{
+  display:block;padding:7px 11px;
+  background:rgba(255,255,255,0.96);border:1px solid #ddd;
+  font-family:'Inter',sans-serif;font-size:9px;
+  font-weight:500;letter-spacing:1px;
+  text-transform:uppercase;color:#888;
+  border-radius:2px;cursor:pointer;
+  box-shadow:0 1px 5px rgba(0,0,0,0.15);
+  transition:all 0.2s;white-space:nowrap;
 }
-.leaflet-popup-content{margin:0;padding:0}
-.pu{padding:13px 15px 11px}
-.pu-n{font-size:8px;font-weight:600;letter-spacing:2px;
-       text-transform:uppercase;color:#8B2500;margin-bottom:4px}
-.pu-t{font-family:'Playfair Display',serif;font-size:13px;
-       font-weight:700;color:#1a1a1a;margin-bottom:7px;line-height:1.3}
-.pu-d{font-size:10px;color:#666;line-height:1.65}
+.reset-map-btn:hover{background:#1B2A4A;color:white;border-color:#1B2A4A}
 
-/* Zoom */
 .leaflet-control-zoom a{font-size:14px !important}
 .leaflet-control-attribution{font-size:8px !important}
 </style>
 </head>
 <body>
-<div class="wrap">
 
+<div class="wrap">
   <div class="sidebar">
     <div class="card-top">
       <div class="eyebrow">SANParks · Optimal Route</div>
@@ -158,16 +223,12 @@ body{font-family:'Inter',sans-serif;width:100%;background:#f0ede8}
         <div class="stat"><span class="stat-v">132h</span><span class="stat-l">drive</span></div>
       </div>
     </div>
-
     <div class="stop-list" id="stopList"></div>
-
-    <div class="reset-row">
-      <button class="reset-btn" onclick="resetView()">↔ Full route</button>
-    </div>
   </div>
-
   <div id="map"></div>
 </div>
+
+<div class="stop-grid" id="stopGrid"></div>
 
 <script>
 const routeLegs=[
@@ -194,16 +255,52 @@ const routeLegs=[
   [[-33.11668, 18.06673], [-33.11351, 18.07093], [-33.11644, 18.08407], [-33.12259, 18.08947], [-33.13707, 18.09388], [-33.14383, 18.10788], [-33.143, 18.11484], [-33.148, 18.12109], [-33.16065, 18.12511], [-33.17409, 18.13562], [-33.19436, 18.13299], [-33.20785, 18.14242], [-33.21772, 18.1432], [-33.23577, 18.16736], [-33.24542, 18.19442], [-33.24376, 18.20457], [-33.27659, 18.20794], [-33.45263, 18.30922], [-33.48648, 18.32265], [-33.60252, 18.41266], [-33.62907, 18.43947], [-33.66522, 18.45643], [-33.72573, 18.4557], [-33.72714, 18.48113], [-33.72126, 18.51059], [-33.72452, 18.52267], [-33.72464, 18.54593], [-33.8061, 18.54778], [-33.86364, 18.53001], [-33.88647, 18.53332], [-33.8872, 18.52492], [-33.91177, 18.4979], [-33.91636, 18.48867], [-33.92176, 18.44798], [-33.91563, 18.42294], [-33.94214, 18.39488], [-33.95058, 18.40823]]
 ];
 const parks=[{"n": 1, "name": "Table Mountain NP", "lat": -33.9571, "lon": 18.4051, "desc": "A Natural New 7 Wonder of the World and South Africa's most visited national park (~4.2 million visits/year). Protects 70km of the Cape Peninsula, 2,200+ plant species in the Cape Floral Kingdom (UNESCO World Heritage Site), and a Marine Protected Area."}, {"n": 2, "name": "Agulhas NP", "lat": -34.8191, "lon": 19.9776, "desc": "The southernmost tip of Africa, where the Indian and Atlantic Oceans officially meet. The historic Cape Agulhas Lighthouse (1849) marks the exact meeting point. Protects 2,000 plant species including 100 endemics and rich intertidal marine life."}, {"n": 3, "name": "Bontebok NP", "lat": -34.0531, "lon": 20.465, "desc": "Established in 1931 to save the bontebok from extinction \u2014 numbers had fallen to just 17 individuals. Today ~200 bontebok live here and the global population has recovered to ~3,000. Protects critically endangered lowland fynbos and 200+ bird species."}, {"n": 4, "name": "Garden Route NP", "lat": -33.9968, "lon": 22.4041, "desc": "Three sections \u2014 Tsitsikamma, Wilderness and Knysna \u2014 protect 40,000 ha of rare indigenous forest, coastal lakes, and dramatic coastline. Records 77 mammals and 300 bird species. Home to the famous Otter Trail and the 216m Bloukrans bungee jump."}, {"n": 5, "name": "Addo Elephant NP", "lat": -33.4897, "lon": 25.7478, "desc": "Home to Africa's Big 7: the Big 5 plus Southern right whale and great white shark. Established in 1931 to protect the last 11 Eastern Cape elephants \u2014 the park now holds 700+. South Africa's third largest national park."}, {"n": 6, "name": "Camdeboo NP", "lat": -32.2748, "lon": 24.5422, "desc": "Surrounds Graaff-Reinet, the 'Gem of the Karoo'. Centrepiece is the Valley of Desolation \u2014 120m dolerite columns rising above the Karoo plains. Home to springbok, black wildebeest and Cape mountain zebra, with ~100,000 visitors/year."}, {"n": 7, "name": "Mountain Zebra NP", "lat": -32.25, "lon": 25.4333, "desc": "Established to protect the critically endangered Cape mountain zebra \u2014 fewer than 100 remained in the 1930s, now 1,000+ in and around the park. Home to cheetah, black rhino, Cape buffalo, 50 mammals and 272 bird species."}, {"n": 8, "name": "Grasslands NP", "lat": -30.53, "lon": 28.5, "desc": "South Africa's newest national park, proclaimed in partnership with WWF-SA to protect the critically endangered grassland biome of the Eastern Cape highlands. Not yet open to regular public visitation \u2014 access and infrastructure still being developed."}, {"n": 9, "name": "Golden Gate Highlands NP", "lat": -28.5, "lon": 28.64, "desc": "Named for the golden-hued Clarens sandstone cliffs in the Maluti Mountains of the Free State. In 1973 the first fossilised Triassic dinosaur eggs found in Africa were discovered here. Records 200+ bird species."}, {"n": 10, "name": "Kruger NP", "lat": -24.0167, "lon": 31.4886, "desc": "South Africa's flagship wildlife reserve \u2014 nearly 2 million hectares, established 1898. Home to 147 mammal species (including ~17,000 elephants and 1,500 lions), 507 bird species and 336 tree species. Close to 2 million visitors in 2024."}, {"n": 11, "name": "Mapungubwe NP", "lat": -22.1833, "lon": 29.3833, "desc": "A UNESCO World Heritage Site (2003) at the confluence of the Limpopo and Shashe rivers, bordering Zimbabwe and Botswana. Site of Africa's first kingdom (AD 900\u20131300). Famous for gold rhino artefacts from 900-year-old royal graves."}, {"n": 12, "name": "Marakele NP", "lat": -24.3167, "lon": 27.5167, "desc": "Tswana for 'place of sanctuary', in the Waterberg Mountains of Limpopo. Home to the Big Five plus the world's largest colony of endangered Cape vultures \u2014 800+ breeding pairs. Also supports ~130 elephants, black and white rhino."}, {"n": 13, "name": "Mokala NP", "lat": -29.2667, "lon": 24.4, "desc": "South Africa's newest proclaimed national park (June 2007), 80km SW of Kimberley. Named for the Setswana word for Camelthorn tree. Shelters black and white rhino, roan and sable antelope, tsessebe, and buffalo on 27,500 ha."}, {"n": 14, "name": "Karoo NP", "lat": -32.2961, "lon": 22.4945, "desc": "A 90,535 ha reserve near Beaufort West, proclaimed 1979. Home to more tortoise species than any national park in the world (five species), 58 mammals, 200+ birds, black rhino, and recently reintroduced lions. The endangered riverine rabbit has been successfully resettled here."}, {"n": 15, "name": "Meerkat NP", "lat": -30.7167, "lon": 21.95, "desc": "The world's only national park protecting a radio telescope array: the MeerKAT (64 antennas) and SKA precursor instruments. Visits by pre-arrangement only through SARAO (sarao.ac.za). Wildlife has recovered significantly since livestock were removed."}, {"n": 16, "name": "Augrabies Falls NP", "lat": -28.5553, "lon": 20.341, "desc": "The Orange River plunges 56 metres into a spectacular 18km gorge \u2014 the Khoikhoi called it 'Aukoerebis' (place of great noise). Established 1966. Home to the endangered black rhino, gemsbok, springbok and quiver trees."}, {"n": 17, "name": "Kgalagadi TFP", "lat": -26.462, "lon": 20.609, "desc": "Southern Africa's first transfrontier peace park (2000), spanning South Africa and Botswana \u2014 38,000 km\u00b2. Southern Kalahari Desert with iconic red dunes. Arguably the continent's best park for big cat sightings \u2014 lion, cheetah and leopard."}, {"n": 18, "name": "Ai-Ais/Richtersveld TFP", "lat": -28.602, "lon": 17.293, "desc": "A South Africa\u2013Namibia transfrontier park protecting the Fish River Canyon \u2014 Africa's largest, 161km long and up to 550m deep. Co-managed with the Nama community. The desert mountains support 360+ plant species per km\u00b2 on just 68mm of rain per year."}, {"n": 19, "name": "Namaqua NP", "lat": -29.7667, "lon": 17.7667, "desc": "Famous for one of the world's most spectacular wildflower displays (August\u2013September): 3,500 plant species transform the Succulent Karoo into a carpet of colour. A global biodiversity hotspot with the highest concentration of succulent plants on Earth."}, {"n": 20, "name": "Tankwa Karoo NP", "lat": -32.2667, "lon": 19.9833, "desc": "Khoisan for 'land of thirst' \u2014 one of South Africa's driest regions. The park's extreme remoteness and zero light pollution make it one of Africa's finest stargazing locations. Records 180+ bird species including the rare black harrier."}, {"n": 21, "name": "West Coast NP", "lat": -33.2167, "lon": 18.05, "desc": "The Langebaan Lagoon \u2014 a Ramsar Wetland of global significance \u2014 is the centrepiece of this 32,000 ha park, 120km north of Cape Town. Supports up to 55,000 waterbirds in summer and 250+ bird species including African penguin, flamingo and white pelican."}];
+const legsMeta=[
+  {leg:1,from:"Table Mountain NP",to:"Agulhas NP",dist:231},
+  {leg:2,from:"Agulhas NP",to:"Bontebok NP",dist:114},
+  {leg:3,from:"Bontebok NP",to:"Garden Route NP",dist:372},
+  {leg:4,from:"Garden Route NP",to:"Addo Elephant NP",dist:233},
+  {leg:5,from:"Addo Elephant NP",to:"Camdeboo NP",dist:243},
+  {leg:6,from:"Camdeboo NP",to:"Mountain Zebra NP",dist:140},
+  {leg:7,from:"Mountain Zebra NP",to:"Grasslands NP",dist:418},
+  {leg:8,from:"Grasslands NP",to:"Golden Gate NP",dist:486},
+  {leg:9,from:"Golden Gate NP",to:"Kruger NP",dist:726},
+  {leg:10,from:"Kruger NP",to:"Mapungubwe NP",dist:534},
+  {leg:11,from:"Mapungubwe NP",to:"Marakele NP",dist:420},
+  {leg:12,from:"Marakele NP",to:"Mokala NP",dist:718},
+  {leg:13,from:"Mokala NP",to:"Karoo NP",dist:449},
+  {leg:14,from:"Karoo NP",to:"Meerkat NP",dist:288},
+  {leg:15,from:"Meerkat NP",to:"Augrabies Falls NP",dist:420},
+  {leg:16,from:"Augrabies Falls NP",to:"Kgalagadi TFP",dist:371},
+  {leg:17,from:"Kgalagadi TFP",to:"Ai-Ais/Richtersveld TFP",dist:628},
+  {leg:18,from:"Ai-Ais/Richtersveld TFP",to:"Namaqua NP",dist:332},
+  {leg:19,from:"Namaqua NP",to:"Tankwa Karoo NP",dist:480},
+  {leg:20,from:"Tankwa Karoo NP",to:"West Coast NP",dist:378},
+  {leg:21,from:"West Coast NP",to:"Table Mountain NP",dist:128}
+];
 
-const map = L.map('map',{zoomControl:true,attributionControl:true});
+const map=L.map('map',{zoomControl:true,attributionControl:true});
 L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
   attribution:'© <a href="https://www.openstreetmap.org/copyright">OSM</a> © <a href="https://carto.com/attributions">CARTO</a>',
   subdomains:'abcd',maxZoom:19
 }).addTo(map);
 
-routeLegs.forEach(function(c){
+routeLegs.forEach(function(c,i){
+  var m=legsMeta[i];
   L.polyline(c,{color:'white',weight:4.5,opacity:0.5,interactive:false}).addTo(map);
   L.polyline(c,{color:'#8B2500',weight:2.0,opacity:0.85,interactive:false}).addTo(map);
+  L.polyline(c,{color:'transparent',weight:16,opacity:0.001}).addTo(map)
+    .on('click',function(e){
+      L.popup({closeButton:true,className:'leg-popup'})
+        .setLatLng(e.latlng)
+        .setContent(
+          '<div class="lp">'+
+          '<div class="lp-route">'+m.from+' → '+m.to+'</div>'+
+          '<div class="lp-dist">'+m.dist+' km</div>'+
+          '<div class="lp-label">driving distance</div>'+
+          '</div>'
+        ).openOn(map);
+    });
 });
 
 var active=null, markers={};
@@ -226,44 +323,69 @@ parks.forEach(function(p){
   markers[p.n]=m;
 });
 
-// Build stop list
+// Desktop stop list
 var listEl=document.getElementById('stopList');
+// Mobile stop grid
+var gridEl=document.getElementById('stopGrid');
+
 parks.forEach(function(p){
+  // Desktop list item
   var item=document.createElement('div');
-  item.className='stop-item';
-  item.id='item'+p.n;
+  item.className='stop-item';item.id='item'+p.n;
   item.innerHTML='<div class="snum">'+p.n+'</div><div class="sname">'+p.name+'</div>';
   item.onclick=function(){flyTo(p.lat,p.lon,p.n);};
   listEl.appendChild(item);
+
+  // Mobile grid item
+  var gi=document.createElement('div');
+  gi.className='sg-item';gi.id='gi'+p.n;
+  gi.innerHTML='<div class="sg-num">'+p.n+'</div><div class="sg-name">'+p.name+'</div>';
+  gi.onclick=function(){flyTo(p.lat,p.lon,p.n);};
+  gridEl.appendChild(gi);
 });
 
 function flyTo(lat,lon,n){
   if(active!==null){
-    var op=document.getElementById('pin'+active);
-    if(op) op.classList.remove('active');
-    var oi=document.getElementById('item'+active);
-    if(oi) oi.classList.remove('active');
+    ['pin','item','gi'].forEach(function(pfx){
+      var el=document.getElementById(pfx+active);
+      if(el) el.classList.remove('active');
+    });
   }
   active=n;
-  var np=document.getElementById('pin'+n);
-  if(np) np.classList.add('active');
-  var ni=document.getElementById('item'+n);
-  if(ni){ni.classList.add('active');ni.scrollIntoView({block:'nearest',behavior:'smooth'});}
+  ['pin','item','gi'].forEach(function(pfx){
+    var el=document.getElementById(pfx+n);
+    if(el) el.classList.add('active');
+  });
+  var li=document.getElementById('item'+n);
+  if(li) li.scrollIntoView({block:'nearest',behavior:'smooth'});
   map.flyTo([lat,lon],9,{duration:0.85});
   setTimeout(function(){markers[n].openPopup();},900);
 }
 
 function resetView(){
   if(active!==null){
-    var op=document.getElementById('pin'+active);
-    if(op) op.classList.remove('active');
-    var oi=document.getElementById('item'+active);
-    if(oi) oi.classList.remove('active');
+    ['pin','item','gi'].forEach(function(pfx){
+      var el=document.getElementById(pfx+active);
+      if(el) el.classList.remove('active');
+    });
     active=null;
   }
   map.closePopup();
   map.flyToBounds([[-35.5,16.0],[-21.0,33.5]],{padding:[20,20],duration:0.85});
 }
+
+var OverviewControl=L.Control.extend({
+  options:{position:'bottomleft'},
+  onAdd:function(){
+    var btn=L.DomUtil.create('button','reset-map-btn');
+    btn.innerHTML='↔ Route overview';
+    L.DomEvent.on(btn,'click',function(e){
+      L.DomEvent.stopPropagation(e);resetView();
+    });
+    return btn;
+  }
+});
+new OverviewControl().addTo(map);
 
 setTimeout(function(){
   map.invalidateSize();
